@@ -1,0 +1,68 @@
+---
+title: "Group 7 Final Project"
+author: "Joe, Daniel, Bertwocane, Alayna"
+date: "8/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Introduction ##
+
+Our Group is researching the data of cases of COVID-19 in each county and age group in Washington State. It is a relevant topic that has affected our world and continues to do so today. While many sources of data about COVID-19 can be found throughout the Internet, our goal is to deliver you specific and tailored information that is relevant for anyone living in Washington State. Our data comes from the [Department of Health](https://www.doh.wa.gov/Emergencies/COVID19/DataDashboard#heading58074). Our data is meant to inform you about the case rates in each county and age group so you are better informed of how it is affecting Washington, rather than focusing on the U.S as a whole.
+
+## Summary ##
+
+Our summary function shows the length of the dataset, the number of counties included in the dataset, the average number of confirmed cases per county, the highest number of confirmed cases in a day throughout all counties, the least number of confirmed cases, and the sum of all confirmed cases. We found that the average confirmed cases per day across all counties was **163** cases and the highest confirmed cases in a day was **5222**. Furthermore, the total number of confirmed cases in this dataset was **43,4543**.
+
+```{r, echo = FALSE, message=FALSE}
+library("knitr")
+source("scripts/summarytable.R")
+data <- read.csv("data/Cases by Earliest Specimen Collection Date - County and Age.csv")
+kable(get_summary_table(data))
+```
+
+From this table, we found that King County had the greatest number of average confirmed cases in a day at **1474 cases**, followed by Pierce County with **718 cases**. This table also shows that across counties the average case rate for people between ages twenty to thirty-four was the highest.  
+
+
+```{r, echo = FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+
+source("scripts/chart1.R")
+
+```
+## Data Charts ##
+
+### What are the case percentages for different age groups in Washington?
+
+```{r, echo = FALSE}
+print(age_graph_fun(age_graph))
+```
+
+
+This pie chart is meant to show the different percentage rates for COVID-19 cases each Age Group in Washington.
+According to our analysis, the age group most susceptible to COVID-19 in Washington State is between 20 to 34, with a **30.59** percent rate, while the least susceptible seem to be people who are 80 years old or older with a **2.8** percent rate. A pie chart was used to represent the data percentages because it allows for the best visual appearance of multiple groups that is easy to follow and understand. The pie chart is uses different colors as well to represent the different age groups. 
+
+
+### How many cases have there been in each Washington state county?
+
+```{r, echo = FALSE, message = FALSE}
+source("scripts/chart2.R")
+covid_data <- read.csv("data/Cases by Earliest Specimen Collection Date - County and Age.csv")
+county_map(covid_data)
+```
+
+
+This map compares the cumulative Covid cases each Washington state county has had up until July of 2021. According to this data, King County has had the most confirmed Covid cases; the populous city of Seattle is likely the cause of the inflated numbers. Spokane and Pierce County are home to the second and third most populace cities in Washington, and much like King county, have had more Covid cases than others.  
+
+
+### What is the difference between the rate of probable cases and rate of confirmed cases in King county? 
+```{r, echo = FALSE, message = FALSE, warning = FALSE }
+source("scripts/chart3.R")
+covid_cases <- read.csv("data/Cases by Earliest Specimen Collection Date - County and Age.csv")
+probable_confirmed_cases(covid_cases)
+```
+
+This chart shows a comparison of the probable and confirmed cases within king County. From the dataset,   19 dates are chosen in order to show the two types of cases. A bar graph is the best way to show this data because it is a good way to have side by side comparison of categorical data. This graph not only shows the rate of confirmed covid cases in King County, it also shows the difference between probable cases and confirmed cases over time. The main observation is that there is a slow increase of probable cases while there is a fast increase of confirmed cases. This might be because it is more difficult to accurately calculate probable cases. But overall, probable cases increase slowly, while confirmed cases increase quickly and stay high.
